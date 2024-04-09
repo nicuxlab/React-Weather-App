@@ -6,7 +6,7 @@ export default function Credit() {
     <p>
       Codé par
       <a href="https://www.shecodes.io/graduates/73033-chaimae-lamirine"
-        > AYIMANDE Nicaise</a>, <a href="https://github.com/shemmee/React-Weather-App">Lien sur github.</a> 
+        > AYIMANDE Nicaise</a> 
     </p>
   </div>
   );

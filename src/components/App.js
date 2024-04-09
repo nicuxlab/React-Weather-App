@@ -9,6 +9,7 @@ import '@fortawesome/fontawesome-free/css/all.min.css';
 
 function App() {
   const [query, setQuery] = useState();
+  
   const [weather, setWeather] = useState({
     loading: true,
     data: {},
@@ -27,7 +28,7 @@ function App() {
       "August",
       "September",
       "October",
-      "Nocvember",
+      "November",
       "December"
     ];
     const days = [
@@ -46,8 +47,10 @@ function App() {
     }`;
     return date;
   };
-
-  const search = async (event) => {
+//search : Une fonction qui est appelée lorsque l'utilisateur appuie sur la touche "Entrée" dans le champ de recherche. Elle 
+//effectue une requête API pour obtenir les données météo de la ville spécifiée par l'utilisateur.
+  
+const search = async (event) => {
     if (event.key === "Enter") {
       event.preventDefault();
       setQuery("");
@@ -69,10 +72,12 @@ function App() {
     }
   };
 
+  //Utilisation de useEffect pour effectuer une requête API 
+  //initiale pour obtenir les données météo de la ville au chargement de l'application.
   useEffect(() => {
     const fetchData = async () => {
       const apiKey = "b03a640e5ef6980o4da35b006t5f2942";
-      const url = `https://api.shecodes.io/weather/v1/current?query=Rabat&key=${apiKey}`;
+      const url = `https://api.shecodes.io/weather/v1/current?query=Cotonou&key=${apiKey}`;
 
       try {
         const response = await axios.get(url);
@@ -90,16 +95,22 @@ function App() {
   return (
     <div className="App">
 
-      {/* SearchEngine component */}
+      {/* Affichage du composant SearchEngine pour permettre à l'utilisateur de saisir une ville à rechercher. */}
+      
       <SearchEngine query={query} setQuery={setQuery} search={search} />
 
+      
+      {/*Affichage d'un message de chargement */}
+     
       {weather.loading && (
         <>
           <br />
           <br />
-          <h4>Searching..</h4>
+          <h4>Patientez la recherche..</h4>
         </>
       )}
+
+      {/*Affichage d'un message d'erreur si la ville recherchée n'est pas trouvée */}
 
       {weather.error && (
         <>
@@ -107,18 +118,20 @@ function App() {
           <br />
           <span className="error-message">
             <span style={{ fontFamily: "font" }}>
-              Sorry city not found, please try again.
+                Désolé, ville introuvable, veuillez réessayer.
             </span>
           </span>
         </>
       )}
 
+    {/* Affichage du composant Forecast pour afficher les données météo actuelles une fois qu'elles sont disponibles.*/}     
+ 
       {weather && weather.data && weather.data.condition && (
-        // Forecast component
-        <Forecast weather={weather} toDate={toDate} />
-      )}
-    </div>
-  );
+          <Forecast weather={weather} toDate={toDate} />
+        )}
+
+      </div>
+    );
 }
 
 export default App;

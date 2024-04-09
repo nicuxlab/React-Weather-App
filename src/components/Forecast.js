@@ -9,12 +9,17 @@ function Forecast({ weather }) {
 
   useEffect(() => {
     const fetchForecastData = async () => {
+    
+      // Construction de l'URL pour l'API météo en fonction de la ville actuelle
       const apiKey = "b03a640e5ef6980o4da35b006t5f2942";
       const url = `https://api.shecodes.io/weather/v1/forecast?query=${data.city}&key=${apiKey}&units=metric`;
 
       try {
+
+        // Récupération des données de prévision météorologique
         const response = await axios.get(url);
         setForecastData(response.data.daily);
+
       } catch (error) {
         console.log("Erreur lors de la récupération des données de prévision:", error);
       }
@@ -67,10 +72,15 @@ function Forecast({ weather }) {
           {data.city}, <span>{data.country}</span>
         </h2>
       </div>
+
       <div className="date">
         <span>{getCurrentDate()}</span>
       </div>
+
+      {/* Affichage de la température */}
+
       <div className="temp">
+        {/* Affichage de l'icône météo */}
         {data.condition.icon_url && (
           <img
             src={data.condition.icon_url}
@@ -78,13 +88,29 @@ function Forecast({ weather }) {
             className="temp-icon"
           />
         )}
+
+        {/* Affichage de la température actuelle */}
+
+
         {renderTemperature(data.temperature.current)}
+
+        {/* Affichage de l'unité de température et du lien pour basculer */}
+
         <sup className="temp-deg" onClick={toggleTemperatureUnit}>
           {isCelsius ? "°C" : "°F"} | {isCelsius ? "°F" : "°C"}
         </sup>
+
       </div>
+      {/* Affichage de la description de la condition météo */}
+      
       <p className="weather-des">{data.condition.description}</p>
+
+       {/* Affichage des informations météo supplémentaires */}
+
       <div className="weather-info">
+        
+        {/* Affichage de la vitesse du vent */}
+
         <div className="col">
           <ReactAnimatedWeather icon="WIND" size="40"/>
           <div>
@@ -92,6 +118,9 @@ function Forecast({ weather }) {
             <p>Vitesse du vent</p>
           </div>
         </div>
+
+        {/* Affichage de l'humidité */}
+
         <div className="col">
           <ReactAnimatedWeather icon="RAIN" size="40"/>
           <div>
@@ -100,6 +129,8 @@ function Forecast({ weather }) {
         </div>
         </div>
       </div>
+
+    {/* Affichage des prévisions météo pour les 5 prochains jours */}
       <div className="forecast">
         <h3>Prévisions sur 5 jours:</h3>
         <div className="forecast-container">
